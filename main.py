@@ -1,8 +1,8 @@
 import customtkinter
+from ctkgridlayout import CTkGridLayout
 
 
 class Main(customtkinter.CTk):
-
     def __init__(self):
         super().__init__()
         self.geometry(
@@ -35,6 +35,15 @@ class Order(customtkinter.CTk):
         super().__init__()
         self.geometry(
             f"{self.winfo_screenwidth()}x{self.winfo_screenheight()}")
+        self.mainGrid = CTkGridLayout(
+            master=self, column_count=2, spacing=15, padding=5)
+        self.mainGrid.grid(row=0, column=0, sticky=customtkinter.BOTH)
+
+    def addToOrder(self):
+        pass
+
+    def removeFromOrder(self):
+        pass
 
 
 if __name__ == "__main__":
