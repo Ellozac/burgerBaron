@@ -25,8 +25,8 @@ class Main(customtkinter.CTk):
             command=self.viewOrderScreen,
             font=customtkinter.CTkFont("Helvetica", size=15)
         )
-        self.viewMenuButton = customtkinter.CTkButton(
-            self, text="Cart", font=customtkinter.CTkFont("Helvetica", size=15))
+        self.viewCartButton = customtkinter.CTkButton(
+            self, command=self.viewCartScreen, text="Cart", font=customtkinter.CTkFont("Helvetica", size=15))
         self.quitButton = customtkinter.CTkButton(
             self,
             text="Quit",
@@ -35,7 +35,7 @@ class Main(customtkinter.CTk):
         )
         self.label.pack()
         self.orderButton.pack(pady=10)
-        self.viewMenuButton.pack(pady=10)
+        self.viewCartButton.pack(pady=10)
         self.quitButton.pack(pady=10)
 
     def viewOrderScreen(self) -> None:
@@ -82,13 +82,32 @@ class Order(customtkinter.CTk):
             self.destroy()
             Cart()
 
-    def removeFromOrder(self):
-        pass
 
-
-class Cart():
+class Cart(customtkinter.CTk):
     def __init__(self):
+        super().__init__()
         print("cart screen")
+        self.geometry(
+            f"{self.winfo_screenwidth()}x{self.winfo_screenheight()}")
+        self.buttonList = []
+        for index, i in enumerate(order):
+            customtkinter.CTkLabel(self, text=i[0], font=customtkinter.CTkFont(
+                "Helvetica", size=15)).grid(row=index, column=0, padx=10)
+            customtkinter.CTkLabel(self, text=i[1], font=customtkinter.CTkFont(
+                "Helvetica", size=15)).grid(row=index, column=1, padx=10)
+            self.buttonList.append(customtkinter.CTkButton(
+                self,
+                text="Remove",
+                font=customtkinter.CTkFont("Helvetica", size=15),
+                fg_color="Red",
+                command=lambda i=i: self.removeFromOrder(i)
+            ))
+            self.buttonList[index].grid(row=index, column=2, padx=10, pady=5)
+
+    def removeFromOrder(self, item):
+        for i in order:
+            if i[0] == item:
+                order.pop(i)
 
 
 def getTotal(currentOrder: list[list[str]]) -> int:
